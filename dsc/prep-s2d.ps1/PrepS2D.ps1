@@ -50,22 +50,12 @@ configuration PrepS2D
             Name = "FS-FileServer"
             Ensure = "Present"
         }
-
-        xWaitForADDomain DscForestWait 
-        { 
-            DomainName = $DomainName 
-            DomainUserCredential= $DomainCreds
-            RetryCount = $RetryCount 
-            RetryIntervalSec = $RetryIntervalSec 
-            DependsOn = "[WindowsFeature]ADPS"
-        }
-
+        
         xComputer DomainJoin
         {
             Name = $env:COMPUTERNAME
             DomainName = $DomainName
-            Credential = $DomainCreds
-            DependsOn = "[xWaitForADDomain]DscForestWait"
+            Credential = $DomainCreds            
         }
 
         LocalConfigurationManager 
